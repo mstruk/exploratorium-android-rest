@@ -1,0 +1,25 @@
+########## Intellij #########
+
+*.iml
+.idea/
+out/
+
+########## Eclipse ##########
+
+.classpath
+.settings/
+.project
+classes/
+libs/
+bin/
+project.properties
+
+########### Maven ###########
+
+target/
+tmp/
+
+########### Android ###########
+
+gen/
+lint.xml

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.openblend</groupId>
+    <artifactId>exploratorium-rest</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>apklib</packaging>
+    <name>Android REST Tests</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <proguard.skip>true</proguard.skip>
+        <android.avd>15</android.avd>
+        <debug>true</debug>
+
+        <version.android>4.0.1.2</version.android>
+        <version.android.support>r7</version.android.support>
+        <version.aerogear.android>1.0.0-SNAPSHOT</version.aerogear.android>
+        <version.httpclient>4.0.1</version.httpclient>
+        <version.gson>2.2.2</version.gson>
+        <version.robolectric>1.1</version.robolectric>
+        <version.junit>4.8.2</version.junit>
+        <version.tjws>3.0-beta-1</version.tjws>
+        <version.servlet.api>2.5</version.servlet.api>
+        <version.jackson>1.9.11</version.jackson>
+        <version.resteasy>3.0-beta-1</version.resteasy>
+    </properties>
+
+    <build>
+        <sourceDirectory>src</sourceDirectory>
+        <testSourceDirectory>test</testSourceDirectory>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                    <artifactId>android-maven-plugin</artifactId>
+                    <version>3.3.0</version>
+                    <extensions>true</extensions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+                <configuration>
+                    <run>
+                        <debug>${debug}</debug>
+                    </run>
+                    <sdk>
+                        <platform>16</platform>
+                    </sdk>
+                    <emulator>
+                        <avd>${android.avd}</avd>
+                    </emulator>
+                    <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                    <proguard>
+                        <skip>${proguard.skip}</skip>
+                    </proguard>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <artifactItems>
+                        <artifactItem>
+                            <groupId>com.google.code.gson</groupId>
+                            <artifactId>gson</artifactId>
+                            <version>2.2.2</version>
+                        </artifactItem>
+                    </artifactItems>
+                    <outputDirectory>${basedir}/libs</outputDirectory>
+                </configuration>
+
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <version>${version.android}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>support-v4</artifactId>
+            <version>${version.android.support}</version>
+        </dependency>
+
+        <!-- Aerogear Android -->
+        <dependency>
+            <groupId>org.aerogear.android</groupId>
+            <artifactId>aerogear-android</artifactId>
+            <version>${version.aerogear.android}</version>
+            <type>apklib</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${version.httpclient}</version>
+        </dependency>
+
+        <!-- Gson: Java to Json conversion -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${version.gson}</version>
+        </dependency>
+
+        <!-- Make sure this is below the android dependencies -->
+        <dependency>
+            <groupId>com.pivotallabs</groupId>
+            <artifactId>robolectric</artifactId>
+            <version>${version.robolectric}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- TJWS embedded HTTP server dependencies -->
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>tjws</artifactId>
+            <version>${version.tjws}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${version.servlet.api}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JSON library used in embedded server test endpoints -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>${version.jackson}</version>
+            <scope>test</scope>
+        </dependency>
+
+	</dependencies>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <properties>
+                <proguard.skip>false</proguard.skip>
+            </properties>
+        </profile>
+    </profiles>
+</project>
